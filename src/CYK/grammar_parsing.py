@@ -1,4 +1,8 @@
-def grammar_parsing(Grammar_Array):
+def grammar_parsing(Grammar_String: str) -> tuple[list[str], list[str], dict[str, list[list[str]]]]:
+    Grammar_Array = Grammar_String.splitlines()
+    for i in range(len(Grammar_Array)):
+        Grammar_Array[i] = Grammar_Array[i].split(" ")
+    
     non_terminals = []
     terminals = []
     R = {}

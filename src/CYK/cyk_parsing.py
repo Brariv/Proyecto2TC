@@ -1,5 +1,5 @@
 # Function to perform the CYK Algorithm
-def cyk_parsing(word, R):
+def cyk_parsing(word: str, R: dict[str, list[list[str]]]) -> bool:
     n = len(word)
 
     # Initialize the table
@@ -35,6 +35,6 @@ def cyk_parsing(word, R):
     # If word can be formed by rules 
     # of given grammar
     if len(T[0][n-1]) != 0:
-        print("True")
+        return True
     else:
-        print("False")
+        return False
