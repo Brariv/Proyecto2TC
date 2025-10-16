@@ -8,10 +8,10 @@ from utils.file_parsing import fileReader
 
 if __name__ == "__main__":
 
-    parse_arguments = "/Users/brandon/Documents/UVG/Github/Proyecto2TC/files/gramatica.txt"
+    parse_arguments = parseLexerArgs();
 
-    lines:list[str] = fileReader(parse_arguments); 
-    # we load the dfa from file,
+    lines:list[str] = fileReader(parse_arguments.gramatics_file); 
+
     # instead of building the dfa from the regex again and again
     dfa = loadDfaFromFile("files/gramatic-dfa.json")
 
