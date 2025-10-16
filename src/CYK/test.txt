@@ -1,8 +1,0 @@
-'S': [['NP', 'VP']], 
-'VP': [['V', 'NP'], ['VP', 'PP'], ['cooks'], ['cuts'], ['drinks'], ['eats']], 
-'PP': [['P', 'NP']], 
-'NP': [['Det', 'N'], ['he'], ['she']], 
-'V': [['cooks'], ['cuts'], ['drinks'], ['eats']], 
-'P': [['in'], ['with']], 
-'N': [['beer'], ['cake'], ['cat'], ['dog'], ['fork'], ['juice'], ['knife'], ['meat'], ['oven'], ['soup'], ['spoon']], 
-'Det': [['a'], ['the']]
