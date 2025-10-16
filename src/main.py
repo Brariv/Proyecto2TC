@@ -33,11 +33,11 @@ if __name__ == "__main__":
     
     CNF = grammar_parsing(CNF)
 
-    CYK = cyk_parsing(parse_phrase.split(), CNF)
+    CYK = cyk_parsing(parse_arguments.string.split(), CNF)
 
     print("\n=== CYK ===")
     if (CYK):
-        print(f"The phrase '{parse_phrase}' is valid according to the grammar.")
+        print(f"The phrase '{parse_arguments.string}' is valid according to the grammar.")
     else:
-        print(f"The phrase '{parse_phrase}' is NOT valid according to the grammar.")
+        print(f"The phrase '{parse_arguments.string}' is NOT valid according to the grammar.")
 

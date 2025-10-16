@@ -1,13 +1,11 @@
-# Python-Multi-Automata-Lexer
-
-A full circle lexer's implementation made purely with python utilities (except for the imgs).
+# Python-Gramatic-Analyzer
 
 ## How to use:
 
 ### Using Nix Flakes (recommended):
   - Use the nix develop command:
     ```fish
-      nix develop . --command "python3" "-O" "src/main.py" "<desire path>" "files/regex.txt" "--string" "<desire string>"
+      nix develop . --command python3 -O src/main.py  --gramatics_file "<desire path>" --string "<desire string>"
     ```
 
 ### Using Python venv:
@@ -25,7 +23,7 @@ A full circle lexer's implementation made purely with python utilities (except f
       ```
   - Run script with desire arguments:
       ```fish
-      python3 -O src/main.py --regex_file "<desire path>" "--string" "<string you want to try out>"
+      python3 -O src/main.py --gramatics_file "<desire path>" "--string" "<string you want to try out>"
       ```
 
 ### Using Python global enviroment:
@@ -35,7 +33,7 @@ A full circle lexer's implementation made purely with python utilities (except f
       ```
   - Run script with desire arguments:
       ```fish
-      python3 -O src/main.py --regex_file "<desire path>" "--string" "<string you want to try out>"
+      python3 -O src/main.py --gramatics_file "<desire path>" --string "<string you want to try out>"
       ```
 
 
