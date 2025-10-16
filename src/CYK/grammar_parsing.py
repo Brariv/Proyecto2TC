@@ -1,35 +1,39 @@
-def grammar_parsing(grammar_string: str) -> tuple[list[str], list[str], dict[str, list[list[str]]]]:
-    grammar_array = grammar_string.splitlines()
-    for i in range(len(grammar_array)):
-        grammar_array[i] = grammar_array[i].split(" ")
-    
-    non_terminals = []
-    terminals = []
+def grammar_parsing(Grammar_Array: dict[str, list[str]]) -> dict[str, list[list[str]]]:
     R = {}
 
-    for i in range(len(grammar_array)):
-        if grammar_array[i][0] not in non_terminals:
-            non_terminals.append(grammar_array[i][0])
-        # if grammar_array[i][2] not in R:
-        #     R[grammar_array[i][2]] = []
-        
-        for j in range(3, len(grammar_array[i])):
-            if grammar_array[i][j] not in terminals and grammar_array[i][j] not in non_terminals and grammar_array[i][j] != '|':
-                terminals.append(grammar_array[i][j])
+    for i in range(len(Grammar_Array)):
 
         Rule = []
         SubRule = []
-        for j in range(2, len(grammar_array[i])):
-            if grammar_array[i][j] != '|':
-                SubRule.append(grammar_array[i][j])
-            if grammar_array[i][j] == '|' or j == len(grammar_array[i]) - 1:
+        key = list(Grammar_Array.keys())[i]
+        rule_items = Grammar_Array[key]
+        for j in range(len(rule_items)):
+            item = rule_items[j].split(" ")
+            if len(item) > 1:
                 if len(SubRule) > 0:
                     Rule.append(SubRule)
                     SubRule = []
+                SubRule.append(item[0])
+                SubRule.append(item[1])
+            else:
+                if len(SubRule) > 0:
+                    Rule.append(SubRule)
 
-            print("Rule for", grammar_array[i][0], ":", Rule)
+                SubRule = []
+                SubRule.append(rule_items[j])
+                Rule.append(SubRule)
+                SubRule = []
+
+            if j == len(rule_items) - 1 and len(SubRule) > 0:
+                Rule.append(SubRule)
+                SubRule = []
         
-        R[grammar_array[i][0]] = Rule
-    return non_terminals, terminals, R
+        R[key] = Rule
+
+    print("\n=== CNF Parsed Grammar ===")
+    for k, v in R.items():
+        print(f"{k} → {v}")
+
+    return R
 
 

@@ -28,6 +28,7 @@ def cyk_parsing(word: str, R: dict[str, list[list[str]]]) -> bool:
                         
                         # If a terminal is found
                         if len(rhs) == 2 and \
+                        k + 1 <= j and \
                         rhs[0] in T[i][k] and \
                         rhs[1] in T[k + 1][j]:
                             T[i][j].add(lhs)

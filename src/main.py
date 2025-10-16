@@ -5,10 +5,14 @@ from parsing.gramatic import stringToGramatic
 from utils.argument_parsing import parseLexerArgs
 from utils.character_parsing import regexToStandarizeRegex
 from utils.file_parsing import fileReader
+from cyk.cyk_parsing import cyk_parsing
+from cyk.grammar_parsing import grammar_parsing
+
 
 if __name__ == "__main__":
 
     parse_arguments = parseLexerArgs();
+    parse_phrase = "she eats a cake with a fork"
 
     lines:list[str] = fileReader(parse_arguments.gramatics_file); 
 
@@ -24,9 +28,16 @@ if __name__ == "__main__":
 
     gramatic = stringToGramatic(unparsed_gramatic)
 
-    removeEpsilonProductions(gramatic)
+    CNF = removeEpsilonProductions(gramatic)
     # now that we have checked them, we start
- 
+    
+    CNF = grammar_parsing(CNF)
 
+    CYK = cyk_parsing(parse_phrase.split(), CNF)
 
+    print("\n=== CYK ===")
+    if (CYK):
+        print(f"The phrase '{parse_phrase}' is valid according to the grammar.")
+    else:
+        print(f"The phrase '{parse_phrase}' is NOT valid according to the grammar.")
 
