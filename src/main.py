@@ -16,9 +16,6 @@ if __name__ == "__main__":
 
     lines:list[str] = fileReader(parse_arguments.gramatics_file); 
 
-    # instead of building the dfa from the regex again and again
-    dfa = loadDfaFromFile("files/gramatic-dfa.json")
-
     unparsed_gramatic: list[str] = list()
     
     for line in lines:
