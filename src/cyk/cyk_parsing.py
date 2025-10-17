@@ -1,5 +1,5 @@
 # Function to perform the CYK Algorithm
-def cyk_parsing(word: str, R: dict[str, list[list[str]]]) -> bool:
+def cyk_parsing(word: list[str], R: dict[str, list[list[str]]]) -> bool:
     n = len(word) # n is its length — this determines the size of the parsing table.
 
     # Initialize the table
@@ -34,22 +34,31 @@ def cyk_parsing(word: str, R: dict[str, list[list[str]]]) -> bool:
 
                 # Iterate over the rules
                 for lhs, rule in R.items():
+                    
                     for rhs in rule:
                         
                         # If a terminal is found
                         # and see if there’s a rule A → BC where:
                         # B can produce the left substring w[i..k]
                         # C can produce the right substring w[k+1..j]
+                        
+                        
                         if len(rhs) == 2 and \
-                        k + 1 <= j and \
-                        rhs[0] in T[i][k] and \
-                        rhs[1] in T[k + 1][j]: 
+                           k + 1 <= j and \
+                           rhs[0] in T[i][k] and \
+                           rhs[1] in T[k + 1][j]:
                             T[i][j].add(lhs)
+                        elif len(rhs) == 1:
+                            # handle unit productions A -> B (or redundant terminal check)
+                            # if the single symbol can produce w[i..j], add lhs
+                            if rhs[0] in T[i][j] or (i == j and rhs[0] == word[j]):
+                                T[i][j].add(lhs)
 
     # If word can be formed by rules 
     # of given grammar
     # The top of the triangle T[0][n-1] corresponds to the whole input string.
     # If it contains the start symbol (like S), the string belongs to the grammar.
+    
     if len(T[0][n-1]) != 0:
         return True
     else:
