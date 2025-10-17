@@ -1,40 +1,56 @@
-def grammar_parsing(Grammar_Array: dict[str, list[str]]) -> dict[str, list[list[str]]]:
-    R = {}
 
-    for i in range(len(Grammar_Array)):
+def grammar_parsing(grammar: dict[str, list[str]]) -> dict[str, list[list[str]]]:
+    cnf = {}
+    new_var_count = 1
+    terminal_map = {}
 
-        Rule = [] 
-        SubRule = []
-        key = list(Grammar_Array.keys())[i]
-        rule_items = Grammar_Array[key]
+    # Step 1: Convert terminals to non-terminals
+    for head, productions in grammar.items():
+        cnf.setdefault(head, [])
+        for prod in productions:
+            symbols = prod.split()
+            for i, sym in enumerate(symbols):
+                if sym.islower():  # treat lowercase as terminal
+                    if sym not in terminal_map:
+                        term_var = f"T_{sym}"
+                        terminal_map[sym] = term_var
+                        cnf[term_var] = [[sym]]  # T_sym -> sym
+                    symbols[i] = terminal_map[sym]
 
-        for j in range(len(rule_items)):
-            item = rule_items[j].split(" ")
-            if len(item) > 1: # if we have more than one item, we need to group them
-                if len(SubRule) > 0: # if we already have something in the subrule, we need to save it first
-                    Rule.append(SubRule)
-                    SubRule = []
-                SubRule.append(item[0])
-                SubRule.append(item[1])
-            else: # if we have just one item, we can just add it to the subrule because it an OR
-                if len(SubRule) > 0: # if we already have something in the subrule, we need to save it first
-                    Rule.append(SubRule)
+            # Step 2: Split long productions
+            while len(symbols) > 2:
+                new_var = f"X{new_var_count}"
+                new_var_count += 1
+                cnf[new_var] = [symbols[:2]]
+                symbols = [new_var] + symbols[2:]
 
-                SubRule = []
-                SubRule.append(rule_items[j])
-                Rule.append(SubRule)
-                SubRule = []
+            cnf[head].append(symbols)
 
-            if j == len(rule_items) - 1 and len(SubRule) > 0: # if we are at the end and we have something in the subrule, we need to save it
-                Rule.append(SubRule)
-                SubRule = []
-        
-        R[key] = Rule # finally we save the rule to the dictionary
+    # Step 3: Eliminate unit productions (A → B)
+    changed = True
+    while changed:
+        changed = False
+        for head in list(cnf.keys()):
+            new_productions = []
+            to_remove = []
+            for prod in cnf[head]:
+                if len(prod) == 1 and prod[0] in cnf:  # unit production
+                    to_remove.append(prod)
+                    for sub_prod in cnf[prod[0]]:
+                        if sub_prod not in cnf[head]:
+                            new_productions.append(sub_prod)
+                    changed = True
+            # Remove unit productions
+            for prod in to_remove:
+                cnf[head].remove(prod)
+            # Add expanded productions
+            cnf[head].extend(new_productions)
 
-    print("\n=== CNF Parsed Grammar ===")
-    for k, v in R.items():
+    print("\n=== CNF Parsed Grammar (unit productions eliminated) ===")
+    for k, v in cnf.items():
         print(f"{k} → {v}")
 
-    return R
+    return cnf
+
 
 

@@ -1,11 +1,9 @@
-from match.dfa import matchStringToDfa
-from parsing.dfa import loadDfaFromFile
 from parsing.epsilon_removal import removeEpsilonProductions
 from parsing.gramatic import stringToGramatic
 from utils.argument_parsing import parseLexerArgs
 from utils.character_parsing import regexToStandarizeRegex
 from utils.file_parsing import fileReader
-from cyk.cyk_parsing import cyk_parsing
+from cyk.cyk_parsing import cyk_parse
 from cyk.grammar_parsing import grammar_parsing
 
 
@@ -30,7 +28,7 @@ if __name__ == "__main__":
     
     CNF = grammar_parsing(CNF)
 
-    CYK = cyk_parsing(parse_arguments.string.split(), CNF)
+    CYK = cyk_parse(parse_arguments.string.split(), CNF)
 
     print("\n=== CYK ===")
     if (CYK):
