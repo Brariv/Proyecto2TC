@@ -42,7 +42,6 @@ def cyk_parsing(word: list[str], R: dict[str, list[list[str]]]) -> bool:
                         # B can produce the left substring w[i..k]
                         # C can produce the right substring w[k+1..j]
                         
-                        
                         if len(rhs) == 2 and \
                            k + 1 <= j and \
                            rhs[0] in T[i][k] and \
@@ -58,7 +57,9 @@ def cyk_parsing(word: list[str], R: dict[str, list[list[str]]]) -> bool:
     # of given grammar
     # The top of the triangle T[0][n-1] corresponds to the whole input string.
     # If it contains the start symbol (like S), the string belongs to the grammar.
-    
+    print("\n=== CYK Parsing Table ===")
+    for i in range(len(T)):
+        print(T[i])
     if len(T[0][n-1]) != 0:
         return True
     else:

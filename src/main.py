@@ -10,7 +10,6 @@ from cyk.grammar_parsing import grammar_parsing
 if __name__ == "__main__":
 
     parse_arguments = parseLexerArgs();
-    parse_phrase = "she eats a cake with a fork"
 
     lines:list[str] = fileReader(parse_arguments.gramatics_file); 
 
